@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { beerReducer } from "./beerReducer";
+import { beerReducer, selectedBeerReducer } from "./beerReducer";
 
 const reducers = combineReducers({
   allBeers: beerReducer,
+  beer: selectedBeerReducer,
 });
 
 export default reducers;
