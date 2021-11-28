@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectedBeer } from "../redux/actions/beerActions";
 import { getBeerById } from "../services/getBeerById";
 
 export default function useBeer(id) {
-  const [beer, setBeer] = useState(null);
+  const dispatch = useDispatch();
+  const beer = useSelector((state) => state.beer);
 
   useEffect(() => {
     const fetchBeer = async () => {
       console.log(id);
       const result = await getBeerById(id);
-      console.log(result);
-      setBeer(result);
+      dispatch(selectedBeer(result));
     };
     fetchBeer(id);
   }, [id]);
