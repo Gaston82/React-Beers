@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedBeer } from "../redux/actions/beerActions";
+import { selectedBeer, removeSelectedBeer } from "../redux/actions/beerActions";
 import { getBeerById } from "../services/getBeerById";
 
 export default function useBeer(id) {
@@ -9,12 +9,17 @@ export default function useBeer(id) {
 
   useEffect(() => {
     const fetchBeer = async () => {
-      console.log(id);
       const result = await getBeerById(id);
       dispatch(selectedBeer(result));
     };
-    fetchBeer(id);
-  }, [id]);
+    if (id && id !== "") {
+      fetchBeer(id);
+    }
+
+    return () => {
+      dispatch(removeSelectedBeer());
+    };
+  }, [id, dispatch]);
 
   return beer;
 }
